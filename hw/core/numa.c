@@ -393,18 +393,6 @@ void numa_complete_configuration(MachineState *ms)
 
     assert(max_numa_nodeid <= MAX_NODES);
 
-    /* No support for sparse NUMA node IDs yet: */
-    for (i = max_numa_nodeid - 1; i >= 0; i--) {
-        /* Report large node IDs first, to make mistakes easier to spot */
-        if (!numa_info[i].present) {
-            error_report("numa: Node ID missing: %d", i);
-            exit(1);
-        }
-    }
-
-    /* This must be always true if all nodes are present: */
-    assert(ms->numa_state->num_nodes == max_numa_nodeid);
-
     if (ms->numa_state->num_nodes > 0) {
         uint64_t numa_total;
 
